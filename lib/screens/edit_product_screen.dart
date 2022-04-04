@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/src/widgets/navigator.dart';
 import '../providers/product.dart';
 import '../providers/products.dart';
 
@@ -49,7 +48,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
           'title': _editedProduct.title,
           'description': _editedProduct.description,
           'price': _editedProduct.price.toString(),
-          // 'imageUrl': _editedProduct.imageUrl,
           'imageUrl': '',
         };
         _imageUrlController.text = _editedProduct.imageUrl;
@@ -87,7 +85,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (!isValid) {
       return;
     }
-    _form.currentState?.save();
+    _form.currentState.save();
     if (_editedProduct.id != null) {
       Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
@@ -130,7 +128,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
                 onSaved: (value) {
                   _editedProduct = Product(
-                      title: _editedProduct.title,
+                      title: value,
                       price: _editedProduct.price,
                       description: _editedProduct.description,
                       imageUrl: _editedProduct.imageUrl,
@@ -188,7 +186,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   _editedProduct = Product(
                     title: _editedProduct.title,
                     price: _editedProduct.price,
-                    description: _editedProduct.description,
+                    description: value,
                     imageUrl: _editedProduct.imageUrl,
                     id: _editedProduct.id,
                     isFavorite: _editedProduct.isFavorite,
@@ -250,7 +248,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           title: _editedProduct.title,
                           price: _editedProduct.price,
                           description: _editedProduct.description,
-                          imageUrl: _editedProduct.imageUrl,
+                          imageUrl: value,
                           id: _editedProduct.id,
                           isFavorite: _editedProduct.isFavorite,
                         );

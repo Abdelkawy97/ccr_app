@@ -8,10 +8,10 @@ class OrderItem {
   final DateTime dateTime;
 
   OrderItem({
-    required this.id,
-    required this.amount,
-    required this.dateTime,
-    required this.products,
+    @required this.id,
+    @required this.amount,
+    @required this.products,
+    @required this.dateTime,
   });
 }
 
@@ -26,10 +26,11 @@ class Orders with ChangeNotifier {
     _orders.insert(
       0,
       OrderItem(
-          id: DateTime.now().toString(),
-          amount: total,
-          dateTime: DateTime.now(),
-          products: cartProducts),
+        id: DateTime.now().toString(),
+        amount: total,
+        dateTime: DateTime.now(),
+        products: cartProducts,
+      ),
     );
     notifyListeners();
   }

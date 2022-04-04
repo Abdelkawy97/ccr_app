@@ -1,7 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-
+import 'dart:ffi';
 import './product.dart';
 
 class Products with ChangeNotifier {
@@ -39,8 +37,7 @@ class Products with ChangeNotifier {
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
   ];
-
-  late bool _showFavoritesOnly = false;
+  var _showFavoritesOnly = false;
 
   List<Product> get items {
     if (_showFavoritesOnly) {
@@ -76,7 +73,6 @@ class Products with ChangeNotifier {
       id: DateTime.now().toString(),
     );
     _items.add(newProduct);
-    // _items.insert(0, newProduct); // at the start of the list
     notifyListeners();
   }
 
