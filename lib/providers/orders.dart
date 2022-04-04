@@ -23,15 +23,17 @@ class Orders with ChangeNotifier {
   }
 
   void AddOrder(List<CartItem> cartProducts, double total) {
-    _orders.insert(
-      0,
-      OrderItem(
-        id: DateTime.now().toString(),
-        amount: total,
-        dateTime: DateTime.now(),
-        products: cartProducts,
-      ),
-    );
-    notifyListeners();
+    if (cartProducts.length != 0) {
+      _orders.insert(
+        0,
+        OrderItem(
+          id: DateTime.now().toString(),
+          amount: total,
+          dateTime: DateTime.now(),
+          products: cartProducts,
+        ),
+      );
+      notifyListeners();
+    }
   }
 }

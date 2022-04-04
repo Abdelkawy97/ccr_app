@@ -21,41 +21,42 @@ class CartScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(8),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Total",
-                      style: TextStyle(fontSize: 20),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Total",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Spacer(),
+                  Chip(
+                    label: Text(
+                      "EGP${cart.TotalAmount.toStringAsFixed(2)}",
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .primaryTextTheme
+                              .titleMedium
+                              ?.color),
                     ),
-                    SizedBox(
-                      width: 10,
+                    backgroundColor: Theme.of(context).primaryColor,
+                  ),
+                  TextButton(
+                    child: Text(
+                      "Order Now",
+                      style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
-                    Spacer(),
-                    Chip(
-                      label: Text(
-                        "\$${cart.TotalAmount.toStringAsFixed(2)}",
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .primaryTextTheme
-                                .titleMedium
-                                ?.color),
-                      ),
-                      backgroundColor: Theme.of(context).primaryColor,
-                    ),
-                    TextButton(
-                      child: Text(
-                        "ORDER NOW",
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                      ),
-                      onPressed: () {
-                        Provider.of<Orders>(context, listen: false).AddOrder(
-                          cart.items.values.toList(),
-                          cart.TotalAmount,
-                        );
-                        cart.Clear();
-                      },
-                    )
-                  ]),
+                    onPressed: () {
+                      Provider.of<Orders>(context, listen: false).AddOrder(
+                        cart.items.values.toList(),
+                        cart.TotalAmount,
+                      );
+                      cart.Clear();
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(
