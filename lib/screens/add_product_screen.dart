@@ -104,9 +104,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
         await showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
-
-            title:  Text("An error occured."),
-            content:  Text("Something went wrong."),
             title: Text("An error occured."),
             content: Text("Something went wrong."),
             actions: [
@@ -142,18 +139,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ],
       ),
       body: _isLoading
-          ?  Center(
-              child:CircularProgressIndicator(),
+          ? Center(
+              child: CircularProgressIndicator(),
             )
           : Padding(
-              padding:  EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Form(
                 key: _form,
                 child: ListView(
                   children: <Widget>[
                     TextFormField(
                       initialValue: _initValues['title'],
-                      decoration:  InputDecoration(labelText: 'Title'),
+                      decoration: InputDecoration(labelText: 'Title'),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_priceFocusNode);
