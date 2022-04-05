@@ -5,7 +5,6 @@ import '../providers/products.dart';
 
 class AddProductScreen extends StatefulWidget {
   static const routeName = '/add-product';
-
   @override
   _AddProductScreenState createState() => _AddProductScreenState();
 }
@@ -105,14 +104,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
         await showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text("An error occured."),
-            content: const Text("Something went wrong."),
+
+            title:  Text("An error occured."),
+            content:  Text("Something went wrong."),
+            title: Text("An error occured."),
+            content: Text("Something went wrong."),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
-                child: const Text("Okay"),
+                child: Text("Okay"),
               )
             ],
           ),
@@ -131,27 +133,27 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text('Add Product'),
+        title: Text('Add Product'),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.save),
+            icon: Icon(Icons.save),
             onPressed: _saveForm,
           ),
         ],
       ),
       body: _isLoading
-          ? const Center(
+          ?  Center(
               child:CircularProgressIndicator(),
             )
           : Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding:  EdgeInsets.all(16.0),
               child: Form(
                 key: _form,
                 child: ListView(
                   children: <Widget>[
                     TextFormField(
                       initialValue: _initValues['title'],
-                      decoration: const InputDecoration(labelText: 'Title'),
+                      decoration:  InputDecoration(labelText: 'Title'),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_priceFocusNode);
@@ -174,7 +176,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     ),
                     TextFormField(
                       initialValue: _initValues['price'],
-                      decoration: const InputDecoration(labelText: 'Price'),
+                      decoration: InputDecoration(labelText: 'Price'),
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
                       focusNode: _priceFocusNode,
@@ -206,7 +208,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     ),
                     TextFormField(
                       initialValue: _initValues['description'],
-                      decoration: const InputDecoration(labelText: 'Description'),
+                      decoration: InputDecoration(labelText: 'Description'),
                       maxLines: 3,
                       keyboardType: TextInputType.multiline,
                       focusNode: _descriptionFocusNode,
@@ -236,7 +238,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         Container(
                           width: 100,
                           height: 100,
-                          margin: const EdgeInsets.only(
+                          margin: EdgeInsets.only(
                             top: 8,
                             right: 10,
                           ),
@@ -247,7 +249,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                           ),
                           child: _imageUrlController.text.isEmpty
-                              ? const Text('Enter a URL')
+                              ? Text('Enter a URL')
                               : FittedBox(
                                   child: Image.network(
                                     _imageUrlController.text,
@@ -257,7 +259,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         ),
                         Expanded(
                           child: TextFormField(
-                            decoration: const InputDecoration(labelText: 'Image URL'),
+                            decoration: InputDecoration(labelText: 'Image URL'),
                             keyboardType: TextInputType.url,
                             textInputAction: TextInputAction.done,
                             controller: _imageUrlController,

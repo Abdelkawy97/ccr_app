@@ -40,6 +40,19 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
                   OrderButton(cart: cart)
+                  TextButton(
+                    child: Text(
+                      "Order Now",
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                    onPressed: () {
+                      Provider.of<Orders>(context, listen: false).AddOrder(
+                        cart.items.values.toList(),
+                        cart.TotalAmount,
+                      );
+                      cart.Clear();
+                    },
+                  ),
                 ],
               ),
             ),

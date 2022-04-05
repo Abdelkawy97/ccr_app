@@ -54,6 +54,20 @@ class Orders with ChangeNotifier {
     });
     _orders = loadedOrders.reversed.toList();
     notifyListeners();
+
+  void AddOrder(List<CartItem> cartProducts, double total) {
+    if (cartProducts.length != 0) {
+      _orders.insert(
+        0,
+        OrderItem(
+          id: DateTime.now().toString(),
+          amount: total,
+          dateTime: DateTime.now(),
+          products: cartProducts,
+        ),
+      );
+      notifyListeners();
+    }
   }
 
   Future<void> AddOrder(List<CartItem> cartProducts, double total) async {
