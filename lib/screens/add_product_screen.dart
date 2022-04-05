@@ -1,17 +1,16 @@
-// ignore_for_file: prefer_void_to_null
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/product.dart';
 import '../providers/products.dart';
 
-class EditProductScreen extends StatefulWidget {
-  static const routeName = '/edit-product';
+class AddProductScreen extends StatefulWidget {
+  static const routeName = '/add-product';
+
   @override
-  _EditProductScreenState createState() => _EditProductScreenState();
+  _AddProductScreenState createState() => _AddProductScreenState();
 }
 
-class _EditProductScreenState extends State<EditProductScreen> {
+class _AddProductScreenState extends State<AddProductScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
@@ -92,8 +91,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
       _isLoading = true;
     });
     if (_editedProduct.id != null) {
-      await Provider.of<Products>(context, listen: false)
+      Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pop();
     } else {
       try {
         await Provider.of<Products>(context, listen: false)
@@ -114,25 +117,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ],
           ),
         );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.of(context).pop();
       }
-      // finally {
-      //   setState(() {
-      //     _isLoading = false;
-      //   });
-      //   Navigator.of(context).pop();
-      // }
     }
-    setState(() {
-      _isLoading = false;
-    });
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Product'),
+        title:const Text('Add Product'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
@@ -142,7 +141,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       ),
       body: _isLoading
           ? const Center(
-              child: CircularProgressIndicator(),
+              child:CircularProgressIndicator(),
             )
           : Padding(
               padding: const EdgeInsets.all(16.0),
