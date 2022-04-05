@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_void_to_null
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/product.dart';
@@ -132,10 +130,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Product'),
+        title: Text('Edit Product'),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.save),
+            icon: Icon(Icons.save),
             onPressed: _saveForm,
           ),
         ],
@@ -189,22 +187,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         }
                         if (double.tryParse(value) == null) {
                           return 'Please enter a valid number.';
-                        }
-                        if (double.parse(value) <= 0) {
-                          return 'Please enter a number greater than zero.';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _editedProduct = Product(
-                            title: _editedProduct.title,
-                            price: double.parse(value),
-                            description: _editedProduct.description,
-                            imageUrl: _editedProduct.imageUrl,
-                            id: _editedProduct.id,
-                            isFavorite: _editedProduct.isFavorite);
-                      },
-                    ),
                         }
                         if (double.parse(value) <= 0) {
                           return 'Please enter a number greater than zero.';
