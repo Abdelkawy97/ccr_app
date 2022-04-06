@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import './cart.dart';
 
 class OrderItem {
@@ -22,18 +24,72 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
-  void AddOrder(List<CartItem> cartProducts, double total) {
-    if (cartProducts.length != 0) {
-      _orders.insert(
-        0,
+  Future<void> FetchAndSetOrders() async {
+    final url = Uri.parse(
+        "https://car-care-and-repair-444e7-default-rtdb.europe-west1.firebasedatabase.app/orders.json");
+    final response = await http.get(url);
+    final List<OrderItem> loadedOrders = [];
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData == null) {
+      return;
+    }
+    extractedData.forEach((orderId, orderData) {
+      loadedOrders.add(
         OrderItem(
-          id: DateTime.now().toString(),
-          amount: total,
-          dateTime: DateTime.now(),
-          products: cartProducts,
+          id: orderId,
+          amount: orderData['amount'],
+          products: (orderData['products'] as List<dynamic>)
+              .map(
+                (item) => CartItem(
+                  id: item['id'],
+                  price: item['price'],
+                  quantity: item['quantity'],
+                  title: item['title'],
+                ),
+              )
+              .toList(),
+          dateTime: DateTime.parse(
+            orderData['dateTime'],
+          ),
         ),
       );
-      notifyListeners();
-    }
+    });
+    _orders = loadedOrders.reversed.toList();
+    notifyListeners();
+  }
+
+  Future<void> AddOrder(List<CartItem> cartProducts, double total) async {
+    final url = Uri.parse(
+        "https://car-care-and-repair-444e7-default-rtdb.europe-west1.firebasedatabase.app/orders.json");
+    final timeStamp = DateTime.now();
+    final response = await http.post(
+      url,
+      body: json.encode(
+        {
+          'amount': total,
+          'dateTime': timeStamp.toIso8601String(),
+          'products': cartProducts
+              .map((cp) => {
+                    'id': cp.id,
+                    'title': cp.title,
+                    'quantity': cp.quantity,
+                    'price': cp.price,
+                  })
+              .toList(),
+        },
+      ),
+    );
+    // if (cartProducts.length != 0) {
+    _orders.insert(
+      0,
+      OrderItem(
+        id: json.decode(response.body)['name'],
+        amount: total,
+        dateTime: timeStamp,
+        products: cartProducts,
+      ),
+    );
+    notifyListeners();
+    // }
   }
 }
